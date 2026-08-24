@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yuyos_Art | Tarjeta Digital</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter & Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+            background-color: #070a12;
+            background: radial-gradient(circle at top, #161233 0%, #090d16 60%, #03050a 100%) !important;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        /* Canvas de fondo */
+        #bubbleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        main {
+            position: relative;
+            z-index: 10;
+        }
+
+        .banner-clip {
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+
+        /* Botones de enlaces */
+        .icon-link {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(22, 30, 46, 0.65);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .icon-link:hover {
+            transform: translateY(-2px);
+            background: rgba(35, 48, 71, 0.85);
+            border-color: rgba(168, 85, 247, 0.4);
+            box-shadow: 0 8px 20px -4px rgba(168, 85, 247, 0.25);
+        }
+
+        #dynamicBannerCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-3 sm:p-4 min-h-screen text-slate-100 relative selection:bg-purple-500 selection:text-white">
+
+    <!-- Canvas de fondo para burbujas tipo soda -->
+    <canvas id="bubbleCanvas"></canvas>
+
+    <!-- Contenedor Principal Elegante y Compacto -->
+    <main class="w-full max-w-sm bg-slate-900/80 rounded-3xl shadow-2xl overflow-hidden border border-slate-800/80 backdrop-blur-xl my-auto">
+        
+        <!-- Banner con Imagen Xenomorph -->
+        <div id="bannerContainer" class="h-36 sm:h-40 relative bg-slate-950 overflow-hidden banner-clip">
+            <img src="https://i.postimg.cc/SxM4Xtf1/Xenomorph.png" 
+                 alt="Banner Yuyos_Art" 
+                 class="w-full h-full object-cover object-center"
+                 onerror="this.onerror=null;this.src='https://placehold.co/600x200/161233/ffffff?text=Yuyos_Art';">
+
+            <!-- Gradiente de desvanecimiento suave -->
+            <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-slate-900/90 pointer-events-none z-10"></div>
+
+            <!-- Badge Live Discreto -->
+            <div class="absolute top-3 right-3 z-20">
+                <div class="bg-slate-900/80 border border-purple-500/30 text-purple-300 text-[10px] font-semibold tracking-wide px-2.5 py-1 rounded-full flex items-center space-x-1.5 shadow-md backdrop-blur-md">
+                    <span class="relative flex h-2 w-2">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
+                    </span>
+                    <span>ONLINE</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Perfil e Información -->
+        <div class="relative px-5 pb-5 text-center">
+            
+            <!-- Foto de Perfil Actualizada -->
+            <div class="-mt-14 mb-2.5 inline-block relative z-20">
+                <div class="relative group">
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full blur opacity-50 group-hover:opacity-80 transition duration-300"></div>
+                    <img src="https://i.postimg.cc/L6jYSnKj/Pf-Pmug-CUT.png" 
+                         alt="Perfil Yuyos_Art" 
+                         class="relative w-22 h-22 w-24 h-24 rounded-full object-cover border-4 border-slate-900 shadow-xl bg-slate-800 ring-1 ring-purple-400/30"
+                         onerror="this.onerror=null;this.src='https://placehold.co/96x96/6366f1/FFFFFF?text=Yuyos';">
+                </div>
+            </div>
+
+            <!-- Título y Subtítulo -->
+            <h1 class="text-xl sm:text-2xl font-bold text-white tracking-tight font-['Outfit']">
+                Yuyos_Art
+            </h1>
+            <p class="text-xs font-medium text-purple-400 mt-0.5">
+                Ilustrador, actor de voz y streamer
+            </p>
+            <p class="text-[11px] text-slate-400 mt-1 italic font-light">
+                "Tu artista y streamer de confianza."
+            </p>
+
+            <!-- Redes Sociales en Grid Ordenada -->
+            <div class="grid grid-cols-2 gap-2.5 mt-5">
+                
+                <!-- Twitch -->
+                <a href="https://twitch.tv/yuyos_art" target="_blank" rel="noopener noreferrer" 
+                   class="icon-link rounded-xl p-2.5 flex items-center justify-center space-x-2 text-white font-medium hover:text-purple-300">
+                    <svg class="w-4 h-4 shrink-0 fill-current text-purple-400" viewBox="0 0 24 24">
+                        <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/>
+                    </svg>
+                    <span class="text-xs">Twitch</span>
+                </a>
+
+                <!-- YouTube -->
+                <a href="https://www.youtube.com/@yuyos_art" target="_blank" rel="noopener noreferrer" 
+                   class="icon-link rounded-xl p-2.5 flex items-center justify-center space-x-2 text-white font-medium hover:text-red-400">
+                    <svg class="w-4 h-4 shrink-0 fill-current text-red-500" viewBox="0 0 24 24">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    <span class="text-xs">YouTube</span>
+                </a>
+
+                <!-- TikTok -->
+                <a href="https://www.tiktok.com/@yuyos_art?_r=1&_t=ZS-96TFQh8PIpQ" target="_blank" rel="noopener noreferrer" 
+                   class="icon-link rounded-xl p-2.5 flex items-center justify-center space-x-2 text-white font-medium hover:text-cyan-300">
+                    <svg class="w-4 h-4 shrink-0 fill-current text-cyan-400" viewBox="0 0 24 24">
+                        <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.98-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                    </svg>
+                    <span class="text-xs">TikTok</span>
+                </a>
+
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/yuyos_art?igsh=Z3B2M3VqNjdtOHJj" target="_blank" rel="noopener noreferrer" 
+                   class="icon-link rounded-xl p-2.5 flex items-center justify-center space-x-2 text-white font-medium hover:text-pink-300">
+                    <svg class="w-4 h-4 shrink-0 fill-current text-pink-500" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                    <span class="text-xs">Instagram</span>
+                </a>
+            </div>
+
+            <!-- Business Mail -->
+            <div class="mt-2.5">
+                <a href="mailto:yuyosart.business@gmail.com" title="yuyosart.business@gmail.com" 
+                   class="icon-link rounded-xl p-2.5 flex items-center justify-center space-x-2 text-white w-full font-medium hover:text-amber-300 group">
+                    <svg class="w-4 h-4 shrink-0 fill-current text-amber-400 group-hover:scale-110 transition-transform duration-200" viewBox="0 0 24 24">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                    <span class="text-xs">Business Mail</span>
+                </a>
+            </div>
+
+            <!-- Pie de tarjeta / Copiar enlace -->
+            <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-slate-400 text-[11px]">
+                <button onclick="copyToClipboard()" class="flex items-center space-x-1 hover:text-purple-400 transition-colors cursor-pointer group">
+                    <svg class="w-3.5 h-3.5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+                    </svg>
+                    <span id="copy-text">Copiar Enlace</span>
+                </button>
+
+                <span class="text-slate-500 font-light">© Yuyos_Art</span>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Toast de Confirmación -->
+    <div id="toast" class="fixed bottom-5 z-50 bg-purple-600/90 backdrop-blur-md text-white px-4 py-2 rounded-xl text-xs font-medium shadow-2xl transition-all duration-300 transform translate-y-12 opacity-0 pointer-events-none flex items-center space-x-1.5 border border-purple-400/30">
+        <svg class="w-3.5 h-3.5 fill-current text-purple-200" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+        <span>¡Enlace copiado!</span>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // Canvas de burbujas en el fondo global
+            const canvas = document.getElementById('bubbleCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+
+            const bubbles = [];
+            const numBubbles = 30;
+
+            function createBubble(initial = false) {
+                return {
+                    x: Math.random() * width,
+                    y: initial ? Math.random() * height : height + Math.random() * 30 + 10,
+                    radius: Math.random() * 5 + 2,
+                    speed: Math.random() * 0.8 + 0.4,
+                    wobbleSpeed: Math.random() * 0.04 + 0.02,
+                    wobbleAmp: Math.random() * 1.2 + 0.4,
+                    wobbleAngle: Math.random() * Math.PI * 2,
+                    opacity: Math.random() * 0.3 + 0.15,
+                    color: Math.random() > 0.4 ? '168, 85, 247' : '236, 72, 153'
+                };
+            }
+
+            for (let i = 0; i < numBubbles; i++) {
+                bubbles.push(createBubble(true));
+            }
+
+            function animateBubbles() {
+                ctx.clearRect(0, 0, width, height);
+
+                bubbles.forEach(b => {
+                    b.y -= b.speed;
+                    b.wobbleAngle += b.wobbleSpeed;
+                    b.x += Math.sin(b.wobbleAngle) * b.wobbleAmp * 0.5;
+
+                    ctx.beginPath();
+                    ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${b.color}, ${b.opacity * 0.3})`;
+                    ctx.fill();
+
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${b.opacity * 0.5})`;
+                    ctx.lineWidth = 0.8;
+                    ctx.stroke();
+
+                    if (b.y < -20) {
+                        Object.assign(b, createBubble(false));
+                    }
+                });
+
+                requestAnimationFrame(animateBubbles);
+            }
+
+            animateBubbles();
+        });
+
+        function copyToClipboard() {
+            var dummy = document.createElement('input');
+            document.body.appendChild(dummy);
+            dummy.value = window.location.href;
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+
+            var toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-12', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            var copyText = document.getElementById('copy-text');
+            copyText.textContent = '¡Copiado!';
+
+            setTimeout(function() {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-12', 'opacity-0');
+                copyText.textContent = 'Copiar Enlace';
+            }, 2200);
+        }
+    </script>
+</body>
+</html>
